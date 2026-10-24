@@ -76,14 +76,19 @@ canvas#view{width:100%;height:100%;display:block}
   background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;
   display:flex;flex-direction:column;gap:16px;
 }
-@media (min-width:900px){
-  .panel{position:sticky;top:14px;max-height:calc(100vh - 130px);max-height:calc(100dvh - 130px);overflow:auto;scrollbar-width:thin}
-}
 .panel section{display:flex;flex-direction:column;gap:8px}
 .panel h3{margin:0;font-size:.8rem;font-weight:600;color:var(--muted)}
 .row{display:flex;flex-wrap:wrap;gap:8px}
 .row.tight{gap:6px;align-items:center}
 .row.two>.btn{flex:1 1 calc(50% - 4px);justify-content:center}
+.row.one>.btn{flex:1 1 100%;justify-content:center}
+.row.three>.btn{flex:1 1 calc(33.333% - 6px);justify-content:center;padding:0 6px;font-size:.86rem;white-space:nowrap}
+@media (min-width:900px) and (max-height:760px){
+  .panel{padding:12px;gap:12px}
+  .panel .btn{min-height:38px}
+  .panel .btn.big{min-height:44px}
+  .sw{width:34px;height:34px}
+}
 
 .sw{width:40px;height:40px;border-radius:50%;border:3px solid transparent;background:var(--c);cursor:pointer;padding:0}
 .sw.on{border-color:#fff;box-shadow:0 0 0 3px var(--c)}
@@ -156,6 +161,8 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid #fff;
 .no-flex-gap .row>*{margin:0 8px 8px 0}
 .no-flex-gap .row.tight>*{margin:0 6px 6px 0}
 .no-flex-gap .row.two>.btn{flex-basis:calc(50% - 8px)}
+.no-flex-gap .row.one>.btn{flex-basis:calc(100% - 8px)}
+.no-flex-gap .row.three>.btn{flex-basis:calc(33.333% - 8px)}
 .no-flex-gap .sizeRow>*+*{margin-left:10px}
 .no-flex-gap #start>*+*{margin-top:12px}
 @media (prefers-reduced-motion:reduce){.btn:active{transform:none}}
@@ -197,21 +204,23 @@ if(!ok)document.documentElement.className+=" no-flex-gap";}catch(e){}})();
     <button class="btn primary big" type="button" id="camBtn">Start Camera</button>
 
     <section>
+      <h3>View</h3>
+      <div class="row one">
+        <button class="btn" type="button" id="vidBtn" title="Show or hide the camera picture (V). Hand tracking keeps working.">📷 Camera view: On</button>
+        <button class="btn" type="button" id="fsBtn" title="Full screen (F). Press Esc or F to exit.">⛶ Full screen</button>
+      </div>
+    </section>
+
+    <section>
       <h3>Colour</h3>
       <div class="row" id="swatches"></div>
     </section>
 
     <section>
-      <h3>Tool</h3>
-      <div class="row two">
+      <h3>Tools</h3>
+      <div class="row three">
         <button class="btn" type="button" data-tool="brush" title="Brush (B)">✏️ Brush</button>
         <button class="btn" type="button" data-tool="eraser" title="Eraser (E)">🧽 Eraser</button>
-      </div>
-    </section>
-
-    <section>
-      <h3>Actions</h3>
-      <div class="row two">
         <button class="btn" type="button" data-act="Undo" title="Undo (U)">↩️ Undo</button>
         <button class="btn" type="button" data-act="Clear" title="Clear (C)">🗑️ Clear</button>
         <button class="btn" type="button" data-act="Shapes" title="Recognize shapes (R)">🔷 Shapes</button>
@@ -232,14 +241,6 @@ if(!ok)document.documentElement.className+=" no-flex-gap";}catch(e){}})();
       <div class="row tight">
         <span class="row tight" id="bgSwatches"></span>
         <input type="color" id="bgPick" value="#000000" aria-label="Custom background colour" title="Custom background colour">
-      </div>
-    </section>
-
-    <section>
-      <h3>View</h3>
-      <div class="row two">
-        <button class="btn" type="button" id="vidBtn" title="Show or hide the camera picture (V). Hand tracking keeps working.">📷 Camera view: On</button>
-        <button class="btn" type="button" id="fsBtn" title="Full screen (F). Press Esc or F to exit.">⛶ Full screen</button>
       </div>
     </section>
   </aside>
